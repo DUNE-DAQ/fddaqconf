@@ -227,7 +227,8 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
                     f"fake_source.output_{s.src_id}",
                     f"datahandler_{s.src_id}.raw_input",
                     QUEUE_FRAGMENT_TYPE,
-                    f'{FRONTEND_TYPE}_link_{s.src_id}', 100000
+                    f'{FRONTEND_TYPE}_link_{s.src_id}',
+                    cfg.source_queue_size
                 )
             )
 
@@ -251,9 +252,6 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
     ###
     def create_felix_cardreader(
             self,
-            # FRONTEND_TYPE: str,
-            # QUEUE_FRAGMENT_TYPE: str,
-            # CARD_ID_OVERRIDE: int,
             NUMA_ID: int,
             RU_DESCRIPTOR # ReadoutUnitDescriptor
         ) -> tuple[list, list]:
@@ -262,6 +260,8 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
 
         [CR]->queues
         """
+        cfg = self.ro_cfg
+
         links_slr0 = []
         links_slr1 = []
         strms_slr0 = []
@@ -277,13 +277,6 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
         links_slr0.sort()
         links_slr1.sort()
 
-        # try:
-        #     ex = self.numa_excpt[(RU_DESCRIPTOR.host_name, RU_DESCRIPTOR.iface)]
-        #     CARD_OVERRIDE = ex['felix_card_id']
-        # except KeyError:
-        #     CARD_OVERRIDE = -1
-        # 
-        # card_id = RU_DESCRIPTOR.iface if CARD_OVERRIDE == -1 else CARD_OVERRIDE
         card_id = self.get_flx_card_id(RU_DESCRIPTOR)
 
         modules = []
@@ -326,7 +319,7 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
                     f"datahandler_{s.src_id}.raw_input",
                     QUEUE_FRAGMENT_TYPE,
                     f'{FRONTEND_TYPE}_link_{s.src_id}',
-                    100000 
+                    cfg.source_queue_size
                 )
             )
         # Queues for card reader 2
@@ -338,7 +331,7 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
                     f"datahandler_{s.src_id}.raw_input",
                     QUEUE_FRAGMENT_TYPE,
                     f'{FRONTEND_TYPE}_link_{s.src_id}',
-                    100000 
+                    cfg.source_queue_size 
                 )
             )
 
@@ -383,12 +376,15 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
                     f"{nic_reader_name}.output_{stream.src_id}",
                     f"datahandler_{stream.src_id}.raw_input",
                     QUEUE_FRAGMENT_TYPE,
-                    f'{FRONTEND_TYPE}_stream_{stream.src_id}', 100000
+                    f'{FRONTEND_TYPE}_stream_{stream.src_id}',
+                    cfg.source_queue_size,
+                    type_hint='perf'
                 )
             )
 
         return modules, queues
     
+
     def create_cardreader(self, RU_DESCRIPTOR, data_file_map):
         # Create the card readers
         cr_mods = []
@@ -428,7 +424,6 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
 
         return cr_mods, cr_queues
     
-
 
     def add_volumes_resources(self, readout_app, RU_DESCRIPTOR):
 

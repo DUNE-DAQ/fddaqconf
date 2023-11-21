@@ -51,6 +51,21 @@ local cs = {
     s.field( "exceptions", self.dpdk_lcore_exceptions, default=[], doc="Exceptions to the default NUMA ID"),
   ]),
 
+  dpdkreader_config : s.record('DPDKReaderConfig', [
+    s.field( "dpdk_eal_args", types.string, default='-l 0-1 -n 3 -- -m [0:1].0 -j', doc='Args passed to the EAL in DPDK'),
+    s.field( "dpdk_lcores_config", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_rx_burst_size", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_lcore_sleep", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_num_mbufs", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_mbuf_cache_size", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_rx_ring_size", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+
+    s.field( "source_queue_size", types.count, default=100000, doc="The source queue size"),
+    s.field( "source_queue_timeout_ms", types.count, default=0, doc="The source queue timeout that will be used in the datalink handle when polling source queues"),
+    s.field( "source_queue_sleep_us", types.count, default=500, doc="The source queue seep that will be used in the datalink handle when polling source queues."),
+
+  ]),
+
   readout: s.record("readout", [
     s.field( "detector_readout_map_file", types.path, default='./DetectorReadoutMap.json', doc="File containing detector hardware map for configuration to run"),
     s.field( "use_fake_data_producers", types.flag, default=false, doc="Use fake data producers that respond with empty fragments immediately instead of (fake) cards and DLHs"),
@@ -64,14 +79,13 @@ local cs = {
     s.field( "data_files", self.data_files, default=[], doc="Files to use by detector type"),
     // DPDK
     s.field( "dpdk_eal_args", types.string, default='-l 0-1 -n 3 -- -m [0:1].0 -j', doc='Args passed to the EAL in DPDK'),
-    // s.field( "dpdk_rxqueues_per_lcore", types.count, default=1, doc='Number of rx queues per core'),
-    // s.field( "dpdk_lcore_id_set", self.id_list, default=1, doc='List of IDs per core'),
     s.field( "dpdk_lcores_config", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
     // FLX
     s.field( "numa_config", self.numa_config, default=self.numa_config, doc='Configuration of FELIX NUMA IDs'),
     // DLH
     s.field( "emulator_mode", types.flag, default=false, doc="If active, timestamps of data frames are overwritten when processed by the readout. This is necessary if the felix card does not set correct timestamps. Former -e"),
     s.field( "thread_pinning_file", types.path, default="", doc="A thread pinning configuration file that gets executed after conf."),
+    s.field( "source_queue_size", types.count, default=100000, doc="The source queue size"),
     s.field( "source_queue_timeout_ms", types.count, default=0, doc="The source queue timeout that will be used in the datalink handle when polling source queues"),
     s.field( "source_queue_sleep_us", types.count, default=500, doc="The source queue seep that will be used in the datalink handle when polling source queues."),
 

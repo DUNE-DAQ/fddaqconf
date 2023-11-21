@@ -474,6 +474,7 @@ def cli(
                 CLOCK_SPEED_HZ = detector.clock_speed_hz,
             )
 
+        print(the_system.apps[ru_name])
 
         if debug:
             console.log(f"{ru_name} app: {the_system.apps[ru_name]}")
