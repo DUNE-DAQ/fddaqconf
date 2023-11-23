@@ -53,17 +53,14 @@ local cs = {
 
   dpdkreader_config : s.record('DPDKReaderConfig', [
     s.field( "dpdk_eal_args", types.string, default='-l 0-1 -n 3 -- -m [0:1].0 -j', doc='Args passed to the EAL in DPDK'),
-    s.field( "dpdk_lcores_config", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
-    s.field( "dpdk_rx_burst_size", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
-    s.field( "dpdk_lcore_sleep", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
-    s.field( "dpdk_num_mbufs", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
-    s.field( "dpdk_mbuf_cache_size", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
-    s.field( "dpdk_rx_ring_size", self.dpdk_lcore_config, default=self.dpdk_lcore_config, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_lcores_config", self.dpdk_lcore_config, default=0, doc='Configuration of DPDK LCore IDs'),
+    s.field( "dpdk_rx_burst_size", types.count, default=0, doc='RX burst size'),
+    s.field( "dpdk_num_mbufs", types.count, default=0, doc='Size of memory pools'),
+    s.field( "dpdk_mbuf_cache_size", types.count, default=0, doc='mbuf cache size'),
+    s.field( "dpdk_rx_ring_size", types.count, default=0, doc='NIC rx ring size'),
 
-    s.field( "source_queue_size", types.count, default=100000, doc="The source queue size"),
-    s.field( "source_queue_timeout_ms", types.count, default=0, doc="The source queue timeout that will be used in the datalink handle when polling source queues"),
-    s.field( "source_queue_sleep_us", types.count, default=500, doc="The source queue seep that will be used in the datalink handle when polling source queues."),
-
+    s.field( "queue_lcore_sleep", types.count, default=0, doc='lcore sleep time'),
+    s.field( "queue_size", types.count, default=100000, doc="The source queue size"),
   ]),
 
   readout: s.record("readout", [
