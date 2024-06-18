@@ -171,7 +171,7 @@ class FDReadoutAppGenerator(ReadoutAppGenerator):
         elif det_str == "VD_Top_TPC":
             fe_type = "tde"
             fakedata_frag_type = "TDE_AMC"
-            queue_frag_type = "TDEFrame"
+            queue_frag_type = "TDEEthFrame"
             fakedata_time_tick=4472*32
             fakedata_frame_size=8972
             
