@@ -77,7 +77,13 @@ local cs = {
     s.field( "crt_llt_triggers", ctbmodule.Llt_count_trigger_seq, []),
     s.field( "pds_llt_triggers", ctbmodule.Llt_count_trigger_seq, []),
     s.field( "fake_trig_1", ctbmodule.Randomtrigger, ctbmodule.Randomtrigger),
-    s.field( "fake_trig_2", ctbmodule.Randomtrigger, ctbmodule.Randomtrigger)
+    s.field( "fake_trig_2", ctbmodule.Randomtrigger, ctbmodule.Randomtrigger),
+    s.field( "beam_reshape_lengths", ctbmodule.Array, []),
+    s.field( "beam_delays", ctbmodule.Array, []),
+    s.field( "crt_reshape_lengths", ctbmodule.Array, []),
+    s.field( "crt_delays", ctbmodule.Array, []),
+    s.field( "pds_reshape_lengths", ctbmodule.Array, []),
+    s.field( "pds_delays", ctbmodule.Array, []),
   ]),
 
 
