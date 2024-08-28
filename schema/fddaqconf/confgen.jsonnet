@@ -77,13 +77,20 @@ local cs = {
     s.field( "crt_llt_triggers", ctbmodule.Llt_count_trigger_seq, []),
     s.field( "pds_llt_triggers", ctbmodule.Llt_count_trigger_seq, []),
     s.field( "fake_trig_1", ctbmodule.Randomtrigger, ctbmodule.Randomtrigger),
-    s.field( "fake_trig_2", ctbmodule.Randomtrigger, ctbmodule.Randomtrigger)
+    s.field( "fake_trig_2", ctbmodule.Randomtrigger, ctbmodule.Randomtrigger),
+    s.field( "beam_reshape_lengths", ctbmodule.Array, []),
+    s.field( "beam_delays", ctbmodule.Array, []),
+    s.field( "crt_reshape_lengths", ctbmodule.Array, []),
+    s.field( "crt_delays", ctbmodule.Array, []),
+    s.field( "pds_reshape_lengths", ctbmodule.Array, []),
+    s.field( "pds_delays", ctbmodule.Array, []),
   ]),
 
 
   cib_hsi_inst: s.record("cib_hsi_inst",[
-  	s.field("trigger"	,types.int4, default=0, 					doc='Which CIB trigger is mapped by this instance'),
+  	s.field("trigger"	,types.int4, default=0, doc='Which CIB trigger is mapped by this instance (0: fake, 1:P1, 2:P2, 3:P3)'),
   	s.field("host" 	 	,types.host, default='localhost',			doc='Host where this HSI app instance will run'),
+  	s.field("port" 	 	,types.port, default=8991,				doc='Port where this HSI app instance will run'),
   	s.field("cib_host"	,types.host, default="np04-iols-cib-01", 	doc='CIB endpoint host'),
   	s.field("cib_port"	,types.port, default=8992, 					doc='CIB endpoint port'),  	
   ]),
